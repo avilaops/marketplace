@@ -1,3 +1,4 @@
+using Amazon.S3;
 using MarketplaceBuilder.Api.Endpoints;
 using MarketplaceBuilder.Api.Middleware;
 using MarketplaceBuilder.Core.Interfaces;
@@ -17,6 +18,25 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
     options.InstanceName = "MarketplaceBuilder:";
 });
+
+// Add S3 client (MinIO compatible)
+builder.Services.AddSingleton<IAmazonS3>(sp =>
+{
+    var config = new AmazonS3Config
+    {
+        ServiceURL = builder.Configuration["Storage:Endpoint"],
+        ForcePathStyle = builder.Configuration.GetValue<bool>("Storage:ForcePathStyle"),
+        SignatureVersion = "v4"
+    };
+
+    return new AmazonS3Client(
+        builder.Configuration["Storage:AccessKey"],
+        builder.Configuration["Storage:SecretKey"],
+        config);
+});
+
+// Add storage service
+builder.Services.AddScoped<IObjectStorage, S3StorageService>();
 
 // Add tenant resolver
 builder.Services.AddScoped<ITenantResolver, TenantResolver>();
@@ -64,6 +84,12 @@ app.MapGet("/", () => new
 
 // Map store provisioning endpoints
 app.MapStoreProvisioningEndpoints();
+
+// Map catalog endpoints
+app.MapCategoryEndpoints();
+app.MapProductEndpoints();
+app.MapProductVariantEndpoints();
+app.MapProductImageEndpoints();
 
 app.Run();
 

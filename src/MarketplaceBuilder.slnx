@@ -4,5 +4,6 @@
   <Project Path="MarketplaceBuilder.Api/MarketplaceBuilder.Api.csproj" />
   <Project Path="MarketplaceBuilder.Core/MarketplaceBuilder.Core.csproj" />
   <Project Path="MarketplaceBuilder.Infrastructure/MarketplaceBuilder.Infrastructure.csproj" />
+  <Project Path="MarketplaceBuilder.Storefront/MarketplaceBuilder.Storefront.csproj" />
   <Project Path="MarketplaceBuilder.Worker/MarketplaceBuilder.Worker.csproj" />
 </Solution>

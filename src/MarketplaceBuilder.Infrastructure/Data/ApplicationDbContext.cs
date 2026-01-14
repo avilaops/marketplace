@@ -14,6 +14,12 @@ public class ApplicationDbContext : DbContext
     public DbSet<Domain> Domains => Set<Domain>();
     public DbSet<StorefrontConfig> StorefrontConfigs => Set<StorefrontConfig>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
+    
+    // Catalog
+    public DbSet<Category> Categories => Set<Category>();
+    public DbSet<Product> Products => Set<Product>();
+    public DbSet<ProductVariant> ProductVariants => Set<ProductVariant>();
+    public DbSet<ProductImage> ProductImages => Set<ProductImage>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -136,5 +142,145 @@ public class ApplicationDbContext : DbContext
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
         });
+
+        // Category
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.ToTable("categories");
+            entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(200);
+            
+            entity.Property(e => e.Slug)
+                .IsRequired()
+                .HasMaxLength(100);
+            
+            entity.Property(e => e.Description)
+                .HasMaxLength(1000);
+            
+            entity.HasIndex(e => new { e.TenantId, e.Slug }).IsUnique();
+            entity.HasIndex(e => e.TenantId);
+            
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            entity.HasOne(e => e.Tenant)
+                .WithMany()
+                .HasForeignKey(e => e.TenantId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // Product
+        modelBuilder.Entity<Product>(entity =>
+        {
+            entity.ToTable("products");
+            entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasMaxLength(300);
+            
+            entity.Property(e => e.Slug)
+                .IsRequired()
+                .HasMaxLength(100);
+            
+            entity.Property(e => e.Description)
+                .HasMaxLength(5000);
+            
+            entity.Property(e => e.Status)
+                .IsRequired()
+                .HasConversion<string>();
+            
+            entity.Property(e => e.PrimaryImageUrl)
+                .HasMaxLength(500);
+            
+            entity.HasIndex(e => new { e.TenantId, e.Slug }).IsUnique();
+            entity.HasIndex(e => e.TenantId);
+            entity.HasIndex(e => e.CategoryId);
+            entity.HasIndex(e => new { e.TenantId, e.Status });
+            
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            entity.HasOne(e => e.Tenant)
+                .WithMany()
+                .HasForeignKey(e => e.TenantId)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            entity.HasOne(e => e.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(e => e.CategoryId)
+                .OnDelete(DeleteBehavior.SetNull);
+        });
+
+        // ProductVariant
+        modelBuilder.Entity<ProductVariant>(entity =>
+        {
+            entity.ToTable("product_variants");
+            entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(200);
+            
+            entity.Property(e => e.Sku)
+                .HasMaxLength(100);
+            
+            entity.Property(e => e.Currency)
+                .IsRequired()
+                .HasMaxLength(3);
+            
+            entity.HasIndex(e => new { e.TenantId, e.ProductId });
+            entity.HasIndex(e => e.Sku);
+            
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            entity.HasOne(e => e.Product)
+                .WithMany(p => p.Variants)
+                .HasForeignKey(e => e.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // ProductImage
+        modelBuilder.Entity<ProductImage>(entity =>
+        {
+            entity.ToTable("product_images");
+            entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.ObjectKey)
+                .IsRequired()
+                .HasMaxLength(500);
+            
+            entity.Property(e => e.PublicUrl)
+                .IsRequired()
+                .HasMaxLength(1000);
+            
+            entity.Property(e => e.ContentType)
+                .HasMaxLength(100);
+            
+            entity.HasIndex(e => new { e.TenantId, e.ProductId });
+            entity.HasIndex(e => e.ObjectKey);
+            
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            entity.HasOne(e => e.Product)
+                .WithMany(p => p.Images)
+                .HasForeignKey(e => e.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
     }
 }
+

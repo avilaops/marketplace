@@ -1,0 +1,67 @@
+@page
+@model MarketplaceBuilder.Storefront.Pages.Products.IndexModel
+@{
+    ViewData["Title"] = Model.StoreName ?? "Products";
+}
+
+@if (Model.StoreNotLive)
+{
+    <div class="container mt-5">
+        <div class="alert alert-warning">
+            <h2>Store Not Published</h2>
+            <p>This store is not currently published. Please contact the store owner.</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container mt-4">
+        <h1 class="mb-4">@Model.StoreName</h1>
+        
+        @if (!Model.Products.Any())
+        {
+            <div class="alert alert-info">
+                <p>No products available at the moment. Check back soon!</p>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            @if (!string.IsNullOrEmpty(product.PrimaryImageUrl))
+                            {
+                                <img src="@product.PrimaryImageUrl" class="card-img-top" alt="@product.Title" style="height: 250px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
+                                    <span class="text-muted">No image</span>
+                                </div>
+                            }
+                            <div class="card-body">
+                                <h5 class="card-title">@product.Title</h5>
+                                @if (!string.IsNullOrEmpty(product.CategoryName))
+                                {
+                                    <p class="text-muted small">@product.CategoryName</p>
+                                }
+                                <p class="card-text">
+                                    <strong class="text-primary">@product.FormattedPrice</strong>
+                                </p>
+                                <a href="/products/@product.Slug" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+}
+
+@section Scripts {
+    <script>
+        console.log('Products page loaded. Total products: @Model.Products.Count');
+    </script>
+}

@@ -38,6 +38,9 @@ builder.Services.AddSingleton<IAmazonS3>(sp =>
 // Add storage service
 builder.Services.AddScoped<IObjectStorage, S3StorageService>();
 
+// Add Stripe gateway
+builder.Services.AddScoped<IStripeGateway, StripeGatewayService>();
+
 // Add tenant resolver
 builder.Services.AddScoped<ITenantResolver, TenantResolver>();
 
@@ -90,6 +93,10 @@ app.MapCategoryEndpoints();
 app.MapProductEndpoints();
 app.MapProductVariantEndpoints();
 app.MapProductImageEndpoints();
+
+// Map checkout endpoints
+app.MapCheckoutEndpoints();
+app.MapOrderEndpoints();
 
 app.Run();
 

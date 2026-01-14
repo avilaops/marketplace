@@ -20,6 +20,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<Product> Products => Set<Product>();
     public DbSet<ProductVariant> ProductVariants => Set<ProductVariant>();
     public DbSet<ProductImage> ProductImages => Set<ProductImage>();
+    
+    // Orders
+    public DbSet<Order> Orders => Set<Order>();
+    public DbSet<OrderItem> OrderItems => Set<OrderItem>();
+    public DbSet<StripeWebhookEvent> StripeWebhookEvents => Set<StripeWebhookEvent>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -281,6 +286,104 @@ public class ApplicationDbContext : DbContext
                 .HasForeignKey(e => e.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
+
+        // Order
+        modelBuilder.Entity<Order>(entity =>
+        {
+            entity.ToTable("orders");
+            entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.Status)
+                .IsRequired()
+                .HasConversion<string>();
+            
+            entity.Property(e => e.Currency)
+                .IsRequired()
+                .HasMaxLength(3);
+            
+            entity.Property(e => e.CustomerEmail)
+                .HasMaxLength(255);
+            
+            entity.Property(e => e.StripeCheckoutSessionId)
+                .HasMaxLength(255);
+            
+            entity.Property(e => e.StripePaymentIntentId)
+                .HasMaxLength(255);
+            
+            entity.HasIndex(e => e.TenantId);
+            entity.HasIndex(e => new { e.TenantId, e.Status, e.CreatedAt });
+            entity.HasIndex(e => e.StripeCheckoutSessionId);
+            
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            entity.HasOne(e => e.Tenant)
+                .WithMany()
+                .HasForeignKey(e => e.TenantId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // OrderItem
+        modelBuilder.Entity<OrderItem>(entity =>
+        {
+            entity.ToTable("order_items");
+            entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.TitleSnapshot)
+                .IsRequired()
+                .HasMaxLength(300);
+            
+            entity.Property(e => e.SkuSnapshot)
+                .HasMaxLength(100);
+            
+            entity.Property(e => e.Currency)
+                .IsRequired()
+                .HasMaxLength(3);
+            
+            entity.HasIndex(e => new { e.TenantId, e.OrderId });
+            entity.HasIndex(e => e.OrderId);
+            
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            entity.HasOne(e => e.Order)
+                .WithMany(o => o.Items)
+                .HasForeignKey(e => e.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // StripeWebhookEvent
+        modelBuilder.Entity<StripeWebhookEvent>(entity =>
+        {
+            entity.ToTable("stripe_webhook_events");
+            entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.StripeEventId)
+                .IsRequired()
+                .HasMaxLength(255);
+            
+            entity.Property(e => e.EventType)
+                .IsRequired()
+                .HasMaxLength(100);
+            
+            entity.Property(e => e.ProcessingStatus)
+                .IsRequired()
+                .HasConversion<string>();
+            
+            entity.Property(e => e.Error)
+                .HasMaxLength(2000);
+            
+            entity.HasIndex(e => e.StripeEventId).IsUnique();
+            entity.HasIndex(e => e.TenantId);
+            entity.HasIndex(e => e.ReceivedAt);
+            
+            entity.Property(e => e.ReceivedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+        });
     }
 }
+
 

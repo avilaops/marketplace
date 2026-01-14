@@ -1,0 +1,63 @@
+# .env file (local development only)
+.env
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache/options directory
+.vs/
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+
+# Docker volumes
+postgres_data/
+redis_data/
+minio_data/
+seq_data/
+
+# Seq data
+seq/
+
+# Node modules (if frontend added later)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Migrations (keep only in source control)
+# **/Migrations/*

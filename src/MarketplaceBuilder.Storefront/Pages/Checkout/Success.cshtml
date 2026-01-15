@@ -1,0 +1,93 @@
+@page "/checkout/success"
+@model MarketplaceBuilder.Storefront.Pages.Checkout.SuccessModel
+@{
+    ViewData["Title"] = "Order Confirmation";
+}
+
+<div class="container mt-5">
+    @if (Model.Order == null)
+    {
+        <div class="alert alert-warning">
+            <h4>Order not found</h4>
+            <p>We couldn't find your order. Please check your email for confirmation.</p>
+            <a href="/products" class="btn btn-primary">Continue Shopping</a>
+        </div>
+    }
+    else if (Model.Order.Status == "Paid")
+    {
+        <div class="text-center mb-4">
+            <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                <i class="bi bi-check-lg" style="font-size: 48px;"></i>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body text-center">
+                <h1 class="text-success mb-3">Order Confirmed!</h1>
+                <p class="lead">Thank you for your purchase.</p>
+                <p>Order ID: <strong>@Model.Order.Id</strong></p>
+                <p>Total: <strong>@((Model.Order.TotalAmount / 100.0m).ToString("N2")) @Model.Order.Currency</strong></p>
+                
+                @if (!string.IsNullOrEmpty(Model.Order.CustomerEmail))
+                {
+                    <p class="text-muted">A confirmation email has been sent to @Model.Order.CustomerEmail</p>
+                }
+
+                <hr class="my-4">
+
+                <h4 class="mb-3">Order Items</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th class="text-end">Price</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Order.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        <strong>@item.TitleSnapshot</strong>
+                                        @if (!string.IsNullOrEmpty(item.SkuSnapshot))
+                                        {
+                                            <br><small class="text-muted">SKU: @item.SkuSnapshot</small>
+                                        }
+                                    </td>
+                                    <td>@item.Quantity</td>
+                                    <td class="text-end">@((item.UnitPriceAmount / 100.0m).ToString("N2")) @item.Currency</td>
+                                    <td class="text-end"><strong>@((item.LineTotalAmount / 100.0m).ToString("N2")) @item.Currency</strong></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-4">
+                    <a href="/products" class="btn btn-primary btn-lg">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.Order.Status == "Pending")
+    {
+        <div class="alert alert-info text-center">
+            <h4>Payment Processing</h4>
+            <p>Your payment is being processed. This may take a few moments.</p>
+            <p>Order ID: <strong>@Model.Order.Id</strong></p>
+            <button class="btn btn-primary" onclick="location.reload()">Refresh Page</button>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger text-center">
+            <h4>Payment @Model.Order.Status</h4>
+            <p>Order ID: @Model.Order.Id</p>
+            <p>Status: @Model.Order.Status</p>
+            <a href="/cart" class="btn btn-primary">Return to Cart</a>
+        </div>
+    }
+</div>

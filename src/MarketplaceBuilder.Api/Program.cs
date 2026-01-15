@@ -98,6 +98,9 @@ app.MapProductImageEndpoints();
 app.MapCheckoutEndpoints();
 app.MapOrderEndpoints();
 
+// Map webhook endpoints
+app.MapWebhookEndpoints();
+
 app.Run();
 
 // Make Program accessible to integration tests

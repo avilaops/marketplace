@@ -55,9 +55,14 @@ jobs:
 
     - name: Run integration tests
       env:
+        ASPNETCORE_ENVIRONMENT: "CI"
+        MigrateOnStartup: "true"
         ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=marketplacebuilder_test;Username=marketplace;Password=marketplace_test_password"
         ConnectionStrings__Redis: "localhost:6379"
+        Stripe__SecretKey: "sk_test_fake_for_ci"
+        Stripe__WebhookSecret: "whsec_fake_for_ci"
       run: dotnet test tests/MarketplaceBuilder.Tests.Integration/MarketplaceBuilder.Tests.Integration.csproj --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=integration-test-results.trx"
+
 
     - name: Publish test results
       uses: dorny/test-reporter@v1

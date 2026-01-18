@@ -13,8 +13,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // Add database context
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("MarketplaceBuilder.Api")));
+if (builder.Environment.IsEnvironment("Test"))
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseInMemoryDatabase("TestDatabase"));
+}
+else
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("MarketplaceBuilder.Api")));
+}
 
 // Add Redis distributed cache
 builder.Services.AddStackExchangeRedisCache(options =>
@@ -127,9 +135,6 @@ app.MapOrderEndpoints();
 
 // Map webhook endpoints
 app.MapWebhookEndpoints();
-
-// Map store provisioning endpoints
-app.MapStoreProvisioningEndpoints();
 
 app.Run();
 

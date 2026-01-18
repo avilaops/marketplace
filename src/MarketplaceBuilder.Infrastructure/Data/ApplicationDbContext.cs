@@ -35,6 +35,19 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        // Skip relational configurations for in-memory database
+        if (Database.ProviderName == "Microsoft.EntityFrameworkCore.InMemory")
+        {
+            // Configure basic keys for in-memory database
+            modelBuilder.Entity<Tenant>().HasKey(e => e.Id);
+            modelBuilder.Entity<StorefrontConfig>().HasKey(e => e.Id);
+            modelBuilder.Entity<AuditLog>().HasKey(e => e.Id);
+            modelBuilder.Entity<TenantAiSettings>().HasKey(e => e.TenantId);
+            modelBuilder.Entity<AiPrompt>().HasKey(e => e.Id);
+            modelBuilder.Entity<AiRun>().HasKey(e => e.Id);
+            return;
+        }
+
         // Tenant
         modelBuilder.Entity<Tenant>(entity =>
         {

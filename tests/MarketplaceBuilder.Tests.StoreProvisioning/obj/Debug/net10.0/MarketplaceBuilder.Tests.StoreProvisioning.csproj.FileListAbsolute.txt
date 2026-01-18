@@ -444,3 +444,4 @@ d:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.StoreProvisioni
 d:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.StoreProvisioning\obj\Debug\net10.0\MarketplaceBuilder.Tests.StoreProvisioning.pdb
 d:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.StoreProvisioning\obj\Debug\net10.0\MarketplaceBuilder.Tests.StoreProvisioning.genruntimeconfig.cache
 d:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.StoreProvisioning\obj\Debug\net10.0\ref\MarketplaceBuilder.Tests.StoreProvisioning.dll
+D:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.StoreProvisioning\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.InMemory.dll

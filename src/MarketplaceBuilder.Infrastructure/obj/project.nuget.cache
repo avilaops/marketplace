@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Nalor9AWGkY=",
+  "dgSpecHash": "VU4Ztho+ZJ4=",
   "success": true,
-  "projectFilePath": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\MarketplaceBuilder.Infrastructure.csproj",
+  "projectFilePath": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\MarketplaceBuilder.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrador\\.nuget\\packages\\awssdk.core\\3.7.400\\awssdk.core.3.7.400.nupkg.sha512",
     "C:\\Users\\Administrador\\.nuget\\packages\\awssdk.s3\\3.7.400\\awssdk.s3.3.7.400.nupkg.sha512",

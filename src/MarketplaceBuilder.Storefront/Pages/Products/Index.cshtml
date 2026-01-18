@@ -18,6 +18,28 @@ else
     <div class="container mt-4">
         <h1 class="mb-4">@Model.StoreName</h1>
         
+        <!-- Store Configuration Display -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Store Configuration</h5>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>Theme:</strong> @Model.Theme
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Currency:</strong> @Model.Currency
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Locale:</strong> @Model.Locale
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         @if (!Model.Products.Any())
         {
             <div class="alert alert-info">

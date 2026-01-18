@@ -39,7 +39,7 @@ public static class StoreProvisioningEndpoints
             .ProducesProblem(StatusCodes.Status400BadRequest);
     }
 
-    private static async Task<IResult> CreateStore(
+    internal static async Task<IResult> CreateStore(
         [FromBody] CreateStoreRequest request,
         ApplicationDbContext context,
         HttpContext httpContext)
@@ -47,7 +47,7 @@ public static class StoreProvisioningEndpoints
         // Validações
         if (string.IsNullOrWhiteSpace(request.StoreName))
         {
-            return Results.Problem("StoreName is required", statusCode: 400);
+            return Results.BadRequest(new { error = "StoreName is required" });
         }
 
         // Gerar slug do tenant baseado no nome da loja
@@ -62,8 +62,14 @@ public static class StoreProvisioningEndpoints
             return Results.Problem($"Store name '{request.StoreName}' results in duplicate slug '{slug}'", statusCode: 400);
         }
 
-        // Criar Tenant e StorefrontConfig de forma transacional
-        using var transaction = await context.Database.BeginTransactionAsync();
+        // Criar Tenant e StorefrontConfig de forma transacional (pular para InMemory)
+        var isInMemory = context.Database.ProviderName == "Microsoft.EntityFrameworkCore.InMemory";
+        Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction? transaction = null;
+        
+        if (!isInMemory)
+        {
+            transaction = await context.Database.BeginTransactionAsync();
+        }
 
         try
         {
@@ -130,7 +136,11 @@ public static class StoreProvisioningEndpoints
             context.AuditLogs.Add(configAuditLog);
 
             await context.SaveChangesAsync();
-            await transaction.CommitAsync();
+            
+            if (!isInMemory && transaction != null)
+            {
+                await transaction.CommitAsync();
+            }
 
             return Results.Created(
                 $"/api/admin/stores/{tenant.Id}",
@@ -138,12 +148,15 @@ public static class StoreProvisioningEndpoints
         }
         catch (Exception ex)
         {
-            await transaction.RollbackAsync();
+            if (!isInMemory && transaction != null)
+            {
+                await transaction.RollbackAsync();
+            }
             return Results.Problem($"Error creating store: {ex.Message}", statusCode: 500);
         }
     }
 
-    private static async Task<IResult> UpdateStoreConfig(
+    internal static async Task<IResult> UpdateStoreConfig(
         Guid tenantId,
         [FromBody] UpdateStoreConfigRequest request,
         ApplicationDbContext context)
@@ -157,34 +170,84 @@ public static class StoreProvisioningEndpoints
         }
 
         var updated = false;
+        var auditLogs = new List<AuditLog>();
 
         if (!string.IsNullOrWhiteSpace(request.StoreName))
         {
+            var oldValue = config.StoreName;
             config.StoreName = request.StoreName;
             updated = true;
+            auditLogs.Add(new AuditLog
+            {
+                Id = Guid.NewGuid(),
+                TenantId = tenantId,
+                Action = "Update",
+                Entity = "StorefrontConfig",
+                EntityId = config.Id,
+                OldValues = System.Text.Json.JsonSerializer.Serialize(new { StoreName = oldValue }),
+                NewValues = System.Text.Json.JsonSerializer.Serialize(new { StoreName = request.StoreName }),
+                CreatedAt = DateTime.UtcNow
+            });
         }
 
         if (!string.IsNullOrWhiteSpace(request.Currency))
         {
+            var oldValue = config.Currency;
             config.Currency = request.Currency;
             updated = true;
+            auditLogs.Add(new AuditLog
+            {
+                Id = Guid.NewGuid(),
+                TenantId = tenantId,
+                Action = "Update",
+                Entity = "StorefrontConfig",
+                EntityId = config.Id,
+                OldValues = System.Text.Json.JsonSerializer.Serialize(new { Currency = oldValue }),
+                NewValues = System.Text.Json.JsonSerializer.Serialize(new { Currency = request.Currency }),
+                CreatedAt = DateTime.UtcNow
+            });
         }
 
         if (!string.IsNullOrWhiteSpace(request.Locale))
         {
+            var oldValue = config.Locale;
             config.Locale = request.Locale;
             updated = true;
+            auditLogs.Add(new AuditLog
+            {
+                Id = Guid.NewGuid(),
+                TenantId = tenantId,
+                Action = "Update",
+                Entity = "StorefrontConfig",
+                EntityId = config.Id,
+                OldValues = System.Text.Json.JsonSerializer.Serialize(new { Locale = oldValue }),
+                NewValues = System.Text.Json.JsonSerializer.Serialize(new { Locale = request.Locale }),
+                CreatedAt = DateTime.UtcNow
+            });
         }
 
         if (!string.IsNullOrWhiteSpace(request.Theme))
         {
+            var oldValue = config.Theme;
             config.Theme = request.Theme;
             updated = true;
+            auditLogs.Add(new AuditLog
+            {
+                Id = Guid.NewGuid(),
+                TenantId = tenantId,
+                Action = "Update",
+                Entity = "StorefrontConfig",
+                EntityId = config.Id,
+                OldValues = System.Text.Json.JsonSerializer.Serialize(new { Theme = oldValue }),
+                NewValues = System.Text.Json.JsonSerializer.Serialize(new { Theme = request.Theme }),
+                CreatedAt = DateTime.UtcNow
+            });
         }
 
         if (updated)
         {
             config.UpdatedAt = DateTime.UtcNow;
+            context.AuditLogs.AddRange(auditLogs);
             await context.SaveChangesAsync();
         }
 

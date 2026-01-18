@@ -16,9 +16,16 @@ public static class DatabaseInitializer
 
         try
         {
-            logger.LogInformation("Applying database migrations...");
-            await db.Database.MigrateAsync();
-            logger.LogInformation("Database migrations applied successfully");
+            if (db.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+            {
+                logger.LogInformation("Applying database migrations...");
+                await db.Database.MigrateAsync();
+                logger.LogInformation("Database migrations applied successfully");
+            }
+            else
+            {
+                logger.LogInformation("Skipping migrations for in-memory database");
+            }
 
             // Seed minimum data if not exists
             await SeedMinimumDataAsync(db, logger);

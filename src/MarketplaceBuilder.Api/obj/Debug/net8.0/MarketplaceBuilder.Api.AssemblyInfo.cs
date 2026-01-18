@@ -13,10 +13,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MarketplaceBuilder.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+90cb9b6b5a6daa2519b38c09cec844014035cb61")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1aeaea4d76600be7254928e0989edeb6d4247acc")]
 [assembly: System.Reflection.AssemblyProductAttribute("MarketplaceBuilder.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MarketplaceBuilder.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("MarketplaceBuilder.Tests.StoreProvisioning")]
 
 // Gerado pela classe WriteCodeFragment do MSBuild.
 

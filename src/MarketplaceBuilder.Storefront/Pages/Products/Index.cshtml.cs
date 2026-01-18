@@ -25,6 +25,9 @@ public class IndexModel : PageModel
 
     public List<ProductListItem> Products { get; set; } = new();
     public string? StoreName { get; set; }
+    public string? Theme { get; set; }
+    public string? Currency { get; set; }
+    public string? Locale { get; set; }
     public bool StoreNotLive { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
@@ -52,6 +55,9 @@ public class IndexModel : PageModel
         }
 
         StoreName = storefrontConfig.StoreName;
+        Theme = storefrontConfig.Theme;
+        Currency = storefrontConfig.Currency;
+        Locale = storefrontConfig.Locale;
 
         // Get active products with default variant
         var products = await _context.Products

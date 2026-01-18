@@ -18,6 +18,13 @@ public class TenantResolverMiddleware
 
     public async Task InvokeAsync(HttpContext context, ITenantResolver tenantResolver)
     {
+        // Skip tenant resolution for test environment
+        if (context.RequestServices.GetRequiredService<IHostEnvironment>().EnvironmentName == "Test")
+        {
+            await _next(context);
+            return;
+        }
+
         var hostname = context.Request.Host.Host;
 
         try

@@ -1,0 +1,9 @@
+d:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Integration\bin\Debug\net8.0\.msCoverageSourceRootsMapping_MarketplaceBuilder.Tests.Integration
+d:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Integration\bin\Debug\net8.0\CoverletSourceRootsMapping_MarketplaceBuilder.Tests.Integration
+d:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Integration\obj\Debug\net8.0\MarketplaceBuilder.Tests.Integration.csproj.AssemblyReference.cache
+d:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Integration\obj\Debug\net8.0\MvcTestingAppManifest.json
+d:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Integration\obj\Debug\net8.0\MarketplaceBuilder.Tests.Integration.GeneratedMSBuildEditorConfig.editorconfig
+d:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Integration\obj\Debug\net8.0\MarketplaceBuilder.Tests.Integration.AssemblyInfoInputs.cache
+d:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Integration\obj\Debug\net8.0\MarketplaceBuilder.Tests.Integration.AssemblyInfo.cs
+d:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Integration\obj\Debug\net8.0\MarketplaceBuilder.Tests.Integration.csproj.CoreCompileInputs.cache
+d:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Integration\obj\Debug\net8.0\MarketplaceBuilder.Tests.Integration.sourcelink.json

@@ -1,11 +1,7 @@
 namespace MarketplaceBuilder.Api.Models;
 
 public record CreateStoreRequest(
-    string StoreName,
-    string Subdomain,
-    string Currency = "USD",
-    string Locale = "en-US",
-    string Theme = "default"
+    string StoreName
 );
 
 public record UpdateStoreConfigRequest(
@@ -17,7 +13,6 @@ public record UpdateStoreConfigRequest(
 
 public record StoreResponse(
     Guid TenantId,
-    string Hostname,
     string Status
 );
 

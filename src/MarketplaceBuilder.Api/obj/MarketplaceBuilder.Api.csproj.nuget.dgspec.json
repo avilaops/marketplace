@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Api\\MarketplaceBuilder.Api.csproj": {}
+    "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Api\\MarketplaceBuilder.Api.csproj": {}
   },
   "projects": {
-    "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Api\\MarketplaceBuilder.Api.csproj": {
+    "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Api\\MarketplaceBuilder.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Api\\MarketplaceBuilder.Api.csproj",
+        "projectUniqueName": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Api\\MarketplaceBuilder.Api.csproj",
         "projectName": "MarketplaceBuilder.Api",
-        "projectPath": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Api\\MarketplaceBuilder.Api.csproj",
+        "projectPath": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Api\\MarketplaceBuilder.Api.csproj",
         "packagesPath": "C:\\Users\\Administrador\\.nuget\\packages\\",
-        "outputPath": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Api\\obj\\",
+        "outputPath": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,8 +33,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\MarketplaceBuilder.Infrastructure.csproj": {
-                "projectPath": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\MarketplaceBuilder.Infrastructure.csproj"
+              "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\MarketplaceBuilder.Infrastructure.csproj": {
+                "projectPath": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\MarketplaceBuilder.Infrastructure.csproj"
               }
             }
           }
@@ -113,14 +113,14 @@
         }
       }
     },
-    "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Core\\MarketplaceBuilder.Core.csproj": {
+    "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Core\\MarketplaceBuilder.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Core\\MarketplaceBuilder.Core.csproj",
+        "projectUniqueName": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Core\\MarketplaceBuilder.Core.csproj",
         "projectName": "MarketplaceBuilder.Core",
-        "projectPath": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Core\\MarketplaceBuilder.Core.csproj",
+        "projectPath": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Core\\MarketplaceBuilder.Core.csproj",
         "packagesPath": "C:\\Users\\Administrador\\.nuget\\packages\\",
-        "outputPath": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Core\\obj\\",
+        "outputPath": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -179,14 +179,14 @@
         }
       }
     },
-    "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\MarketplaceBuilder.Infrastructure.csproj": {
+    "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\MarketplaceBuilder.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\MarketplaceBuilder.Infrastructure.csproj",
+        "projectUniqueName": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\MarketplaceBuilder.Infrastructure.csproj",
         "projectName": "MarketplaceBuilder.Infrastructure",
-        "projectPath": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\MarketplaceBuilder.Infrastructure.csproj",
+        "projectPath": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\MarketplaceBuilder.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Administrador\\.nuget\\packages\\",
-        "outputPath": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\obj\\",
+        "outputPath": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -208,8 +208,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Core\\MarketplaceBuilder.Core.csproj": {
-                "projectPath": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Core\\MarketplaceBuilder.Core.csproj"
+              "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Core\\MarketplaceBuilder.Core.csproj": {
+                "projectPath": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Core\\MarketplaceBuilder.Core.csproj"
               }
             }
           }

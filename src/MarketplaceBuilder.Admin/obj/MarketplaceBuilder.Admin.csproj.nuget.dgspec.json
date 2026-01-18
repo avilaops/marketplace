@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Admin\\MarketplaceBuilder.Admin.csproj": {}
+    "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Admin\\MarketplaceBuilder.Admin.csproj": {}
   },
   "projects": {
-    "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Admin\\MarketplaceBuilder.Admin.csproj": {
+    "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Admin\\MarketplaceBuilder.Admin.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Admin\\MarketplaceBuilder.Admin.csproj",
+        "projectUniqueName": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Admin\\MarketplaceBuilder.Admin.csproj",
         "projectName": "MarketplaceBuilder.Admin",
-        "projectPath": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Admin\\MarketplaceBuilder.Admin.csproj",
+        "projectPath": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Admin\\MarketplaceBuilder.Admin.csproj",
         "packagesPath": "C:\\Users\\Administrador\\.nuget\\packages\\",
-        "outputPath": "d:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Admin\\obj\\",
+        "outputPath": "D:\\Projetos\\## Avx\\## Marketplace\\src\\MarketplaceBuilder.Admin\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

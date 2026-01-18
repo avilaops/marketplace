@@ -12,12 +12,25 @@ namespace MarketplaceBuilder.Admin.Pages.Onboarding
         [BindProperty]
         public string Locale { get; set; } = "pt-PT";
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            var tenantId = HttpContext.Session.GetString("OnboardingTenantId");
+            if (string.IsNullOrEmpty(tenantId))
+            {
+                return RedirectToPage("Step1-Identity");
+            }
+            return Page();
         }
 
         public IActionResult OnPost()
         {
+            var tenantId = HttpContext.Session.GetString("OnboardingTenantId");
+            if (string.IsNullOrEmpty(tenantId))
+            {
+                return RedirectToPage("Step1-Identity");
+            }
+
+            // TODO: Call API to update config
             TempData["Currency"] = Currency;
             TempData["Locale"] = Locale;
             return RedirectToPage("Step4-DomainPublish");

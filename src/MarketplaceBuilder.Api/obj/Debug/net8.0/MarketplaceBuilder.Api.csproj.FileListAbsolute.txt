@@ -125,5 +125,3 @@ D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Api\bin\Debug\net8.0\ap
 D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Api\bin\Debug\net8.0\OpenAI.dll
 D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Api\bin\Debug\net8.0\System.ClientModel.dll
 D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Api\bin\Debug\net8.0\System.Memory.Data.dll
-D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Api\obj\Debug\net8.0\MarketplaceBuilder.Api.RazorAssemblyInfo.cache
-D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Api\obj\Debug\net8.0\MarketplaceBuilder.Api.RazorAssemblyInfo.cs

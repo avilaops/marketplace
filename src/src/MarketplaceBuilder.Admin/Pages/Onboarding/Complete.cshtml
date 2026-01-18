@@ -1,0 +1,17 @@
+@page
+@{
+    ViewData["Title"] = "Onboarding Complete";
+    Layout = "_AdminLayout";
+}
+
+<h2>Onboarding Complete!</h2>
+
+<p>Your store has been created and published.</p>
+
+<ul>
+    <li>Store Name: @TempData["StoreName"]</li>
+    <li>URL: https://@TempData["Subdomain"].localtest.me</li>
+</ul>
+
+<a href="/admin/catalog" class="btn btn-primary">Go to Catalog</a>
+<a href="@($"https://{TempData["Subdomain"]}.localtest.me")" class="btn btn-secondary" target="_blank">View Storefront</a>

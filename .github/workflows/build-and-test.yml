@@ -53,6 +53,18 @@ jobs:
     - name: Run unit tests
       run: dotnet test tests/MarketplaceBuilder.Tests.Unit/MarketplaceBuilder.Tests.Unit.csproj --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=unit-test-results.trx"
 
+    - name: Install dotnet-ef tool
+      run: dotnet tool install --global dotnet-ef
+
+    - name: Apply EF Core migrations to test database
+      env:
+        ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=marketplacebuilder_test;Username=marketplace;Password=marketplace_test_password"
+      run: |
+        dotnet ef database update \
+          --project src/MarketplaceBuilder.Infrastructure/MarketplaceBuilder.Infrastructure.csproj \
+          --startup-project src/MarketplaceBuilder.Api/MarketplaceBuilder.Api.csproj \
+          --connection "${{ env.ConnectionStrings__DefaultConnection }}"
+
     - name: Run integration tests
       env:
         ASPNETCORE_ENVIRONMENT: "CI"

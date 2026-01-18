@@ -1,0 +1,16 @@
+/* Admin styles */
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.flex-grow-1 {
+    margin-left: 250px;
+}
+
+/* Toaster styles */
+.toast {
+    min-width: 300px;
+}

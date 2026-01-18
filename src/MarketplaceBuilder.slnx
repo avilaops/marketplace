@@ -1,6 +1,7 @@
 <Solution>
   <Project Path="../tests/MarketplaceBuilder.Tests.Integration/MarketplaceBuilder.Tests.Integration.csproj" />
   <Project Path="../tests/MarketplaceBuilder.Tests.Unit/MarketplaceBuilder.Tests.Unit.csproj" />
+  <Project Path="MarketplaceBuilder.Admin/MarketplaceBuilder.Admin.csproj" />
   <Project Path="MarketplaceBuilder.Api/MarketplaceBuilder.Api.csproj" />
   <Project Path="MarketplaceBuilder.Core/MarketplaceBuilder.Core.csproj" />
   <Project Path="MarketplaceBuilder.Infrastructure/MarketplaceBuilder.Infrastructure.csproj" />

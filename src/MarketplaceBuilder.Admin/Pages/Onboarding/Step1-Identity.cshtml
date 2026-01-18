@@ -1,0 +1,18 @@
+@page
+@model MarketplaceBuilder.Admin.Pages.Onboarding.Step1_IdentityModel
+@{
+    ViewData["Title"] = "Step 1: Identity";
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Step 1: Store Identity</h2>
+        <form method="post">
+            <div class="mb-3">
+                <label for="storeName" class="form-label">Store Name</label>
+                <input type="text" class="form-control" id="storeName" name="StoreName" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Next</button>
+        </form>
+    </div>
+</div>

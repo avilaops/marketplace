@@ -26,6 +26,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
     public DbSet<StripeWebhookEvent> StripeWebhookEvents => Set<StripeWebhookEvent>();
 
+    // AI
+    public DbSet<TenantAiSettings> TenantAiSettings => Set<TenantAiSettings>();
+    public DbSet<AiPrompt> AiPrompts => Set<AiPrompt>();
+    public DbSet<AiRun> AiRuns => Set<AiRun>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -382,6 +387,86 @@ public class ApplicationDbContext : DbContext
             
             entity.Property(e => e.ReceivedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
+        });
+
+        // TenantAiSettings
+        modelBuilder.Entity<TenantAiSettings>(entity =>
+        {
+            entity.ToTable("tenant_ai_settings");
+            entity.HasKey(e => e.TenantId);
+            
+            entity.Property(e => e.ModelDefault)
+                .IsRequired()
+                .HasMaxLength(50);
+            
+            entity.Property(e => e.ApiKey)
+                .HasMaxLength(255);
+            
+            entity.HasOne(e => e.Tenant)
+                .WithOne()
+                .HasForeignKey<TenantAiSettings>(e => e.TenantId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // AiPrompt
+        modelBuilder.Entity<AiPrompt>(entity =>
+        {
+            entity.ToTable("ai_prompts");
+            entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+            
+            entity.Property(e => e.Template)
+                .IsRequired();
+            
+            entity.Property(e => e.VariablesSchema)
+                .IsRequired();
+            
+            entity.Property(e => e.Channel)
+                .IsRequired()
+                .HasMaxLength(50);
+            
+            entity.HasIndex(e => new { e.Name, e.Version }).IsUnique();
+        });
+
+        // AiRun
+        modelBuilder.Entity<AiRun>(entity =>
+        {
+            entity.ToTable("ai_runs");
+            entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.InputHash)
+                .IsRequired()
+                .HasMaxLength(64);
+            
+            entity.Property(e => e.Output)
+                .IsRequired();
+            
+            entity.Property(e => e.Model)
+                .IsRequired()
+                .HasMaxLength(50);
+            
+            entity.Property(e => e.CorrelationId)
+                .IsRequired()
+                .HasMaxLength(100);
+            
+            entity.HasIndex(e => e.TenantId);
+            entity.HasIndex(e => e.CreatedAt);
+            
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            entity.HasOne(e => e.Tenant)
+                .WithMany()
+                .HasForeignKey(e => e.TenantId)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            entity.HasOne(e => e.Prompt)
+                .WithMany()
+                .HasForeignKey(e => e.PromptId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
     }
 }

@@ -1,0 +1,297 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "MarketplaceBuilder.Storefront/1.0.0": {
+        "dependencies": {
+          "MarketplaceBuilder.Infrastructure": "1.0.0",
+          "Microsoft.Extensions.Caching.StackExchangeRedis": "8.0.0"
+        },
+        "runtime": {
+          "MarketplaceBuilder.Storefront.dll": {}
+        }
+      },
+      "AWSSDK.Core/3.7.400": {
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.400.0"
+          }
+        }
+      },
+      "AWSSDK.S3/3.7.400": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.400"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.S3.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.400.0"
+          }
+        }
+      },
+      "Microsoft.EntityFrameworkCore/8.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Abstractions": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.EntityFrameworkCore.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Abstractions/8.0.0": {
+        "runtime": {
+          "lib/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Relational/8.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.EntityFrameworkCore.Relational.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
+        }
+      },
+      "Microsoft.Extensions.Caching.StackExchangeRedis/8.0.0": {
+        "dependencies": {
+          "StackExchange.Redis": "2.6.122"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.Caching.StackExchangeRedis.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53112"
+          }
+        }
+      },
+      "Newtonsoft.Json/13.0.3": {
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.3.27908"
+          }
+        }
+      },
+      "Npgsql/8.0.0": {
+        "runtime": {
+          "lib/net8.0/Npgsql.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.0.0"
+          }
+        }
+      },
+      "Npgsql.EntityFrameworkCore.PostgreSQL/8.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "8.0.0",
+          "Microsoft.EntityFrameworkCore.Abstractions": "8.0.0",
+          "Microsoft.EntityFrameworkCore.Relational": "8.0.0",
+          "Npgsql": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.0.0"
+          }
+        }
+      },
+      "Pipelines.Sockets.Unofficial/2.2.8": {
+        "runtime": {
+          "lib/net5.0/Pipelines.Sockets.Unofficial.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "2.2.8.1080"
+          }
+        }
+      },
+      "StackExchange.Redis/2.6.122": {
+        "dependencies": {
+          "Pipelines.Sockets.Unofficial": "2.2.8"
+        },
+        "runtime": {
+          "lib/net6.0/StackExchange.Redis.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.6.122.38350"
+          }
+        }
+      },
+      "Stripe.net/50.1.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3",
+          "System.Configuration.ConfigurationManager": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Stripe.net.dll": {
+            "assemblyVersion": "50.1.0.0",
+            "fileVersion": "50.1.0.0"
+          }
+        }
+      },
+      "System.Configuration.ConfigurationManager/8.0.0": {
+        "dependencies": {
+          "System.Security.Cryptography.ProtectedData": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/System.Configuration.ConfigurationManager.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
+        }
+      },
+      "System.Security.Cryptography.ProtectedData/8.0.0": {
+        "runtime": {
+          "lib/net8.0/System.Security.Cryptography.ProtectedData.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
+        }
+      },
+      "MarketplaceBuilder.Core/1.0.0": {
+        "runtime": {
+          "MarketplaceBuilder.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "MarketplaceBuilder.Infrastructure/1.0.0": {
+        "dependencies": {
+          "AWSSDK.S3": "3.7.400",
+          "MarketplaceBuilder.Core": "1.0.0",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.0",
+          "Stripe.net": "50.1.0"
+        },
+        "runtime": {
+          "MarketplaceBuilder.Infrastructure.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MarketplaceBuilder.Storefront/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AWSSDK.Core/3.7.400": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qw+WGhxcYtZ6wc1uibOu9XXLsfUpQ1r+gWa0euFnm1e9HowQbcwvKvOqQzwBNqIBO7S5IJ26T9kV/eFiwvZAkQ==",
+      "path": "awssdk.core/3.7.400",
+      "hashPath": "awssdk.core.3.7.400.nupkg.sha512"
+    },
+    "AWSSDK.S3/3.7.400": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OWCTOIDLd9tisJBigWlws3zXXU8IPc6MGracx0zojB4z0ki7ruL77ZWbj5j9j3zSVvnnLe4uOL/4w2lco/9kBw==",
+      "path": "awssdk.s3/3.7.400",
+      "hashPath": "awssdk.s3.3.7.400.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-SoODat83pGQUpWB9xULdMX6tuKpq/RTXDuJ2WeC1ldUKcKzLkaFJD1n+I0nOLY58odez/e7z8b6zdp235G/kyg==",
+      "path": "microsoft.entityframeworkcore/8.0.0",
+      "hashPath": "microsoft.entityframeworkcore.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Abstractions/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VR22s3+zoqlVI7xauFKn1znSIFHO8xuILT+noSwS8bZCKcHz0ydkTDQMuaxSa5WBaQrZmwtTz9rmRvJ7X8mSPQ==",
+      "path": "microsoft.entityframeworkcore.abstractions/8.0.0",
+      "hashPath": "microsoft.entityframeworkcore.abstractions.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Relational/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fFKkr24cYc7Zw5T6DC4tEyOEPgPbq23BBmym1r9kn4ET9F3HKaetpOeQtV2RryYyUxEeNkJuxgfiZHTisqZc+A==",
+      "path": "microsoft.entityframeworkcore.relational/8.0.0",
+      "hashPath": "microsoft.entityframeworkcore.relational.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Caching.StackExchangeRedis/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kyjUU0VujU4WcQoS/3EkMgTWIF4Trqfp2hDFSd21jnb0otyNXvDwx8dtMi37IwGt95imz34wEuTnFzSrPGb1tA==",
+      "path": "microsoft.extensions.caching.stackexchangeredis/8.0.0",
+      "hashPath": "microsoft.extensions.caching.stackexchangeredis.8.0.0.nupkg.sha512"
+    },
+    "Newtonsoft.Json/13.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
+      "path": "newtonsoft.json/13.0.3",
+      "hashPath": "newtonsoft.json.13.0.3.nupkg.sha512"
+    },
+    "Npgsql/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Qiz74U+O7Mv4knrsXgKVYGJjgwoziK+aMFZqz7PtKR3vyGIhZA0tnW6HoUnL3X+YqtmVuhmoKkN8LDWEHMxPbw==",
+      "path": "npgsql/8.0.0",
+      "hashPath": "npgsql.8.0.0.nupkg.sha512"
+    },
+    "Npgsql.EntityFrameworkCore.PostgreSQL/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GDXiMS9peEdjSCU/rfgyHruio7q6tYuywGaktqEi6UPQ6ILechp3fVVX+dHXkIXt4nklCBzYVWkzFrSL9ubKUA==",
+      "path": "npgsql.entityframeworkcore.postgresql/8.0.0",
+      "hashPath": "npgsql.entityframeworkcore.postgresql.8.0.0.nupkg.sha512"
+    },
+    "Pipelines.Sockets.Unofficial/2.2.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zG2FApP5zxSx6OcdJQLbZDk2AVlN2BNQD6MorwIfV6gVj0RRxWPEp2LXAxqDGZqeNV1Zp0BNPcNaey/GXmTdvQ==",
+      "path": "pipelines.sockets.unofficial/2.2.8",
+      "hashPath": "pipelines.sockets.unofficial.2.2.8.nupkg.sha512"
+    },
+    "StackExchange.Redis/2.6.122": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wp7mvGpFXaevfZ07/SDeh/6YHUJEgwJIGyjbDWKBYbPwKMJQYFz9zFEmBptqtVzqvSgft5nlewwutoaMaG0LPA==",
+      "path": "stackexchange.redis/2.6.122",
+      "hashPath": "stackexchange.redis.2.6.122.nupkg.sha512"
+    },
+    "Stripe.net/50.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-q6mc5CngdCLEWNHpFaa2NEOml/3cZ5jTDp1R7iHNbYHkGX5h0TmDa3theILyVTd2yOH9HqLmeeJMCpCwUeDy0A==",
+      "path": "stripe.net/50.1.0",
+      "hashPath": "stripe.net.50.1.0.nupkg.sha512"
+    },
+    "System.Configuration.ConfigurationManager/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JlYi9XVvIREURRUlGMr1F6vOFLk7YSY4p1vHo4kX3tQ0AGrjqlRWHDi66ImHhy6qwXBG3BJ6Y1QlYQ+Qz6Xgww==",
+      "path": "system.configuration.configurationmanager/8.0.0",
+      "hashPath": "system.configuration.configurationmanager.8.0.0.nupkg.sha512"
+    },
+    "System.Security.Cryptography.ProtectedData/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+TUFINV2q2ifyXauQXRwy4CiBhqvDEDZeVJU7qfxya4aRYOKzVBpN+4acx25VcPB9ywUN6C0n8drWl110PhZEg==",
+      "path": "system.security.cryptography.protecteddata/8.0.0",
+      "hashPath": "system.security.cryptography.protecteddata.8.0.0.nupkg.sha512"
+    },
+    "MarketplaceBuilder.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MarketplaceBuilder.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

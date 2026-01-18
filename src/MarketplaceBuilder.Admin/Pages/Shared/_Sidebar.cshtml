@@ -1,0 +1,23 @@
+@{
+    var currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? "";
+}
+
+<div class="sidebar">
+    <nav class="nav flex-column">
+        <a class="nav-link" asp-page="/Onboarding/Step1-Identity" class="@(currentPage.Contains("Onboarding") ? "active" : "")">
+            <i class="bi bi-house-door"></i> Onboarding
+        </a>
+        <a class="nav-link" asp-page="/Catalog/Index">
+            <i class="bi bi-grid"></i> Catalog
+        </a>
+        <a class="nav-link" asp-page="/Orders/Index">
+            <i class="bi bi-receipt"></i> Orders
+        </a>
+        <a class="nav-link" asp-page="/Billing/Index">
+            <i class="bi bi-credit-card"></i> Billing
+        </a>
+        <a class="nav-link" asp-page="/Settings/Index">
+            <i class="bi bi-gear"></i> Settings
+        </a>
+    </nav>
+</div>

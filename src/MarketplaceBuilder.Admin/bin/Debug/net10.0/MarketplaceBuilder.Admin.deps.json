@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "MarketplaceBuilder.Admin/1.0.0": {
+        "runtime": {
+          "MarketplaceBuilder.Admin.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MarketplaceBuilder.Admin/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -10,8 +10,11 @@ public class ApiHealthCheckTests : IClassFixture<WebApplicationFactory<Program>>
 
     public ApiHealthCheckTests(WebApplicationFactory<Program> factory)
     {
-        _factory = factory;
-        _client = factory.CreateClient();
+        _factory = factory.WithWebHostBuilder(builder =>
+        {
+            builder.UseSetting("ASPNETCORE_ENVIRONMENT", "Test");
+        });
+        _client = _factory.CreateClient();
     }
 
     [Fact]
@@ -41,18 +44,17 @@ public class ApiHealthCheckTests : IClassFixture<WebApplicationFactory<Program>>
         Assert.Contains("version", content);
     }
 
-    [Theory]
-    [InlineData("/health")]
-    [InlineData("/")]
-    public async Task Endpoint_Returns200(string endpoint)
+    [Fact]
+    public async Task TenantResolver_DoesNotThrow_WhenHostIsLocalhost()
     {
-        // Act
-        var response = await _client.GetAsync(endpoint);
+        // Arrange: Create client with localhost host header
+        var client = _factory.CreateClient();
+        client.DefaultRequestHeaders.Host = "localhost";
 
-        // Assert
-        Assert.True(
-            response.IsSuccessStatusCode,
-            $"Endpoint {endpoint} returned {response.StatusCode}"
-        );
+        // Act: Call an endpoint that goes through tenant resolver middleware
+        var response = await client.GetAsync("/");
+
+        // Assert: Should return 200 OK, not throw exception
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 }

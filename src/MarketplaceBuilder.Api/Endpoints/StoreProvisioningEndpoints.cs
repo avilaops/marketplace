@@ -291,4 +291,106 @@ public static class StoreProvisioningEndpoints
             config.Status.ToString(),
             config.PublishedAt.Value));
     }
+
+    private static async Task<IResult> CreateStore(
+        [FromBody] CreateStoreRequest request,
+        ApplicationDbContext context,
+        HttpContext httpContext)
+    {
+        var tenantId = Guid.NewGuid();
+        var tenant = new Tenant
+        {
+            Id = tenantId,
+            Name = request.StoreName,
+            Slug = Slugify(request.StoreName),
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        };
+
+        var config = new StorefrontConfig
+        {
+            Id = Guid.NewGuid(),
+            TenantId = tenantId,
+            StoreName = request.StoreName,
+            Status = StoreStatus.Draft,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        };
+
+        context.Tenants.Add(tenant);
+        context.StorefrontConfigs.Add(config);
+        await context.SaveChangesAsync();
+
+        // Audit log
+        var auditLog = new AuditLog
+        {
+            Id = Guid.NewGuid(),
+            TenantId = tenantId,
+            UserId = "admin", // TODO: get from auth
+            Action = "tenant.created",
+            EntityType = "Tenant",
+            EntityId = tenantId.ToString(),
+            Details = $"Created tenant {request.StoreName}",
+            IpAddress = httpContext.Connection.RemoteIpAddress?.ToString(),
+            CreatedAt = DateTime.UtcNow
+        };
+        context.AuditLogs.Add(auditLog);
+        await context.SaveChangesAsync();
+
+        return Results.Created($"/api/admin/stores/{tenantId}", new { tenantId, storeName = request.StoreName });
+    }
+
+    private static async Task<IResult> UpdateConfig(
+        Guid tenantId,
+        [FromBody] UpdateConfigRequest request,
+        ApplicationDbContext context)
+    {
+        var config = await context.StorefrontConfigs.FirstOrDefaultAsync(c => c.TenantId == tenantId);
+        if (config == null) return Results.NotFound();
+
+        config.Theme = request.Theme;
+        config.Currency = request.Currency;
+        config.Locale = request.Locale;
+        config.UpdatedAt = DateTime.UtcNow;
+
+        await context.SaveChangesAsync();
+        return Results.Ok();
+    }
+
+    private static async Task<IResult> CreateDomain(
+        Guid tenantId,
+        [FromBody] CreateDomainRequest request,
+        ApplicationDbContext context,
+        IDistributedCache cache)
+    {
+        var hostname = $"{request.Subdomain}.localtest.me";
+        if (await context.Domains.AnyAsync(d => d.Hostname == hostname))
+            return Results.Conflict("Domain already exists");
+
+        var domain = new Domain
+        {
+            Id = Guid.NewGuid(),
+            TenantId = tenantId,
+            Hostname = hostname,
+            IsActive = true,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        context.Domains.Add(domain);
+        await context.SaveChangesAsync();
+
+        // Invalidate cache
+        await TenantResolver.InvalidateCacheAsync(cache, hostname);
+
+        return Results.Created($"/api/admin/stores/{tenantId}/domain", domain);
+    }
+
+    private static string Slugify(string input)
+    {
+        return Regex.Replace(input.ToLower(), @"[^a-z0-9\-]", "-");
+    }
 }
+
+public record CreateStoreRequest(string StoreName);
+public record UpdateConfigRequest(string Theme, string Currency, string Locale);
+public record CreateDomainRequest(string Subdomain);

@@ -1,9 +1,11 @@
 using MarketplaceBuilder.Api.Helpers;
 using MarketplaceBuilder.Api.Models;
 using MarketplaceBuilder.Core.Entities;
+using MarketplaceBuilder.Infrastructure.AI;
 using MarketplaceBuilder.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 
 namespace MarketplaceBuilder.Api.Endpoints;
 
@@ -19,6 +21,7 @@ public static class ProductEndpoints
         group.MapPost("/", Create);
         group.MapPut("/{id:guid}", Update);
         group.MapDelete("/{id:guid}", Delete);
+        group.MapPost("/{id:guid}/generate-description", GenerateDescription);
     }
 
     private static async Task<IResult> GetAll(
@@ -351,5 +354,57 @@ public static class ProductEndpoints
         await context.SaveChangesAsync();
 
         return Results.NoContent();
+    }
+
+    private static async Task<IResult> GenerateDescription(
+        Guid id,
+        ApplicationDbContext context,
+        AiRunner aiRunner,
+        AiUsageRecorder usageRecorder,
+        HttpContext httpContext)
+    {
+        var tenantId = (Guid?)httpContext.Items["TenantId"];
+        if (!tenantId.HasValue)
+            return Results.Problem("Tenant not resolved", statusCode: 401);
+
+        var product = await context.Products
+            .Include(p => p.Category)
+            .FirstOrDefaultAsync(p => p.Id == id && p.TenantId == tenantId.Value);
+
+        if (product == null)
+            return Results.NotFound();
+
+        // Check AI settings
+        var aiSettings = await context.TenantAiSettings.FindAsync(tenantId.Value);
+        if (aiSettings == null || !aiSettings.Enabled)
+            return Results.Problem("AI not enabled for this tenant", statusCode: 403);
+
+        // Get prompt
+        var prompt = await context.AiPrompts.FirstOrDefaultAsync(p => p.Name == "generate-product-description");
+        if (prompt == null)
+            return Results.Problem("AI prompt not found", statusCode: 500);
+
+        // Render prompt
+        var variables = new Dictionary<string, string>
+        {
+            ["nome"] = product.Title,
+            ["categoria"] = product.Category?.Name ?? "Geral",
+            ["idioma"] = "português" // TODO: from tenant settings
+        };
+        var renderedPrompt = AiPromptRenderer.Render(prompt.Template, variables);
+
+        // Run AI
+        var result = await aiRunner.RunAsync(renderedPrompt);
+
+        // Record usage
+        var inputHash = Convert.ToHexString(SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(renderedPrompt)));
+        await usageRecorder.RecordAsync(tenantId.Value, prompt.Id, inputHash, result, Guid.NewGuid().ToString());
+
+        return Results.Ok(new
+        {
+            description = result.Output,
+            tokens = result.TokensUsed,
+            cost = result.CostUsd
+        });
     }
 }

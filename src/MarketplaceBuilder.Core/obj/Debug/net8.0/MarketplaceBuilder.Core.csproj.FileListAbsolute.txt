@@ -1,0 +1,12 @@
+D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Core\bin\Debug\net8.0\MarketplaceBuilder.Core.deps.json
+D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Core\bin\Debug\net8.0\MarketplaceBuilder.Core.dll
+D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Core\bin\Debug\net8.0\MarketplaceBuilder.Core.pdb
+D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Core\obj\Debug\net8.0\MarketplaceBuilder.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Core\obj\Debug\net8.0\MarketplaceBuilder.Core.AssemblyInfoInputs.cache
+D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Core\obj\Debug\net8.0\MarketplaceBuilder.Core.AssemblyInfo.cs
+D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Core\obj\Debug\net8.0\MarketplaceBuilder.Core.csproj.CoreCompileInputs.cache
+D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Core\obj\Debug\net8.0\MarketplaceBuilder.Core.sourcelink.json
+D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Core\obj\Debug\net8.0\MarketplaceBuilder.Core.dll
+D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Core\obj\Debug\net8.0\refint\MarketplaceBuilder.Core.dll
+D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Core\obj\Debug\net8.0\MarketplaceBuilder.Core.pdb
+D:\Projetos\## Avx\## Marketplace\src\MarketplaceBuilder.Core\obj\Debug\net8.0\ref\MarketplaceBuilder.Core.dll

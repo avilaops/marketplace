@@ -1,0 +1,30 @@
+@page
+@model MarketplaceBuilder.Admin.Pages.Onboarding.Step3_LocaleCurrencyModel
+@{
+    ViewData["Title"] = "Step 3: Locale & Currency";
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Step 3: Locale and Currency</h2>
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Currency</label>
+                <select class="form-select" name="Currency">
+                    <option value="EUR">EUR</option>
+                    <option value="USD">USD</option>
+                    <option value="BRL">BRL</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Locale</label>
+                <select class="form-select" name="Locale">
+                    <option value="pt-PT">pt-PT</option>
+                    <option value="pt-BR">pt-BR</option>
+                    <option value="en-US">en-US</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Next</button>
+        </form>
+    </div>
+</div>

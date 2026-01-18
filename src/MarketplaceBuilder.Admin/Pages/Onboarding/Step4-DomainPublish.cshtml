@@ -1,0 +1,19 @@
+@page
+@model MarketplaceBuilder.Admin.Pages.Onboarding.Step4_DomainPublishModel
+@{
+    ViewData["Title"] = "Step 4: Domain & Publish";
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Step 4: Domain and Publish</h2>
+        <form method="post">
+            <div class="mb-3">
+                <label for="subdomain" class="form-label">Subdomain</label>
+                <input type="text" class="form-control" id="subdomain" name="Subdomain" required>
+                <small class="form-text text-muted">Will be {subdomain}.localtest.me</small>
+            </div>
+            <button type="submit" class="btn btn-success">Publish Store</button>
+        </form>
+    </div>
+</div>

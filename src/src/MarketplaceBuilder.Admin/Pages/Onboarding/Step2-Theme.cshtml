@@ -1,0 +1,20 @@
+@page
+@model MarketplaceBuilder.Admin.Pages.Onboarding.Step2_ThemeModel
+@{
+    ViewData["Title"] = "Step 2: Theme";
+    Layout = "_AdminLayout";
+}
+
+<h2>Step 2: Choose Theme</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Theme</label>
+        <select class="form-select" asp-for="Theme">
+            <option value="default">Default</option>
+            <option value="dark">Dark</option>
+            <option value="minimal">Minimal</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Next</button>
+</form>

@@ -1,0 +1,6 @@
+D:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Unit\obj\Debug\net8.0\MarketplaceBuilder.Tests.Unit.csproj.AssemblyReference.cache
+D:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Unit\obj\Debug\net8.0\MarketplaceBuilder.Tests.Unit.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Unit\obj\Debug\net8.0\MarketplaceBuilder.Tests.Unit.AssemblyInfoInputs.cache
+D:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Unit\obj\Debug\net8.0\MarketplaceBuilder.Tests.Unit.AssemblyInfo.cs
+D:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Unit\obj\Debug\net8.0\MarketplaceBuilder.Tests.Unit.csproj.CoreCompileInputs.cache
+D:\Projetos\## Avx\## Marketplace\tests\MarketplaceBuilder.Tests.Unit\obj\Debug\net8.0\MarketplaceBuilder.Tests.Unit.sourcelink.json

@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MarketplaceBuilder Admin</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MarketplaceBuilder.Admin.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="d-flex">
+        @await Html.PartialAsync("_Sidebar")
+        <div class="flex-grow-1">
+            <header class="bg-light border-bottom">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between align-items-center py-2">
+                        <div>
+                            <h5 class="mb-0">MarketplaceBuilder Admin</h5>
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <small class="text-muted">Welcome, @User.Identity.Name</small>
+                            }
+                        </div>
+                        <div>
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <form method="post" asp-page="/Account/Logout" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </header>
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["Message"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            <main class="container-fluid mt-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

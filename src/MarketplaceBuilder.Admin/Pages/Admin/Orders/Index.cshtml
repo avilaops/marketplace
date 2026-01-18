@@ -1,0 +1,154 @@
+@page
+@model MarketplaceBuilder.Admin.Pages.Admin.Orders.IndexModel
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Orders</h2>
+
+        <!-- Filters -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <form method="get" class="row g-3">
+                    <div class="col-md-2">
+                        <label for="Status" class="form-label">Status</label>
+                        <select name="Status" id="Status" class="form-select" asp-for="Status">
+                            <option value="">All</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Failed">Failed</option>
+                            <option value="Refunded">Refunded</option>
+                            <option value="Canceled">Canceled</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="FromDate" class="form-label">From Date</label>
+                        <input type="date" name="FromDate" id="FromDate" class="form-control" asp-for="FromDate" />
+                    </div>
+                    <div class="col-md-2">
+                        <label for="ToDate" class="form-label">To Date</label>
+                        <input type="date" name="ToDate" id="ToDate" class="form-control" asp-for="ToDate" />
+                    </div>
+                    <div class="col-md-2">
+                        <label for="MinTotal" class="form-label">Min Total</label>
+                        <input type="number" name="MinTotal" id="MinTotal" class="form-control" asp-for="MinTotal" />
+                    </div>
+                    <div class="col-md-2">
+                        <label for="MaxTotal" class="form-label">Max Total</label>
+                        <input type="number" name="MaxTotal" id="MaxTotal" class="form-control" asp-for="MaxTotal" />
+                    </div>
+                    <div class="col-md-2">
+                        <label for="CustomerEmail" class="form-label">Customer Email</label>
+                        <input type="email" name="CustomerEmail" id="CustomerEmail" class="form-control" asp-for="CustomerEmail" />
+                    </div>
+                    <div class="col-md-2">
+                        <label for="OrderId" class="form-label">Order ID</label>
+                        <input type="text" name="OrderId" id="OrderId" class="form-control" asp-for="OrderId" />
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary me-2">Filter</button>
+                        <a href="?page=1" class="btn btn-secondary">Clear</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Orders Table -->
+        @if (Model.Orders != null && Model.Orders.Items.Any())
+        {
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Status</th>
+                                    <th>Customer</th>
+                                    <th>Total</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var order in Model.Orders.Items)
+                                {
+                                    <tr>
+                                        <td>@order.Id.ToString().Substring(0, 8)...</td>
+                                        <td>
+                                            <span class="badge bg-@(GetStatusBadgeClass(order.Status))">@order.Status</span>
+                                        </td>
+                                        <td>@order.CustomerEmail</td>
+                                        <td>@FormatAmount(order.TotalAmount, order.Currency)</td>
+                                        <td>@order.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                                        <td>
+                                            <a asp-page="Details" asp-route-orderId="@order.Id" class="btn btn-sm btn-outline-primary">View</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    @if (Model.Orders.TotalCount > Model.PageSize)
+                    {
+                        <nav aria-label="Orders pagination">
+                            <ul class="pagination justify-content-center">
+                                @if (Model.CurrentPage > 1)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" asp-page="Index" asp-route-page="@(Model.CurrentPage - 1)">Previous</a>
+                                    </li>
+                                }
+
+                                @for (int i = Math.Max(1, Model.CurrentPage - 2); i <= Math.Min(Model.Orders.TotalCount / Model.PageSize + 1, Model.CurrentPage + 2); i++)
+                                {
+                                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                        <a class="page-link" asp-page="Index" asp-route-page="@i">@i</a>
+                                    </li>
+                                }
+
+                                @if (Model.CurrentPage < (Model.Orders.TotalCount / Model.PageSize + 1))
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" asp-page="Index" asp-route-page="@(Model.CurrentPage + 1)">Next</a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                No orders found matching the current filters.
+            </div>
+        }
+    </div>
+</div>
+
+@functions {
+    string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Paid" => "success",
+            "Pending" => "warning",
+            "Failed" => "danger",
+            "Refunded" => "secondary",
+            "Canceled" => "dark",
+            _ => "light"
+        };
+    }
+
+    string FormatAmount(long amount, string currency)
+    {
+        // Simple formatting - in real app, use proper currency formatting
+        return $"{currency} {(amount / 100.0):F2}";
+    }
+}

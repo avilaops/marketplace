@@ -1,0 +1,178 @@
+@page "{orderId}"
+@model MarketplaceBuilder.Admin.Pages.Admin.Orders.DetailsModel
+@{
+    ViewData["Title"] = $"Order {Model.OrderId}";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-page="Index">Orders</a></li>
+                <li class="breadcrumb-item active">Order @Model.OrderId.ToString().Substring(0, 8)...</li>
+            </ol>
+        </nav>
+
+        @if (Model.Order != null)
+        {
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h4>Order Details</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Order Information</h6>
+                            <p><strong>Order ID:</strong> @Model.Order.Id</p>
+                            <p><strong>Status:</strong> <span class="badge bg-@(GetStatusBadgeClass(Model.Order.Status))">@Model.Order.Status</span></p>
+                            <p><strong>Created:</strong> @Model.Order.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                            <p><strong>Customer Email:</strong> @Model.Order.CustomerEmail</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Payment Information</h6>
+                            <p><strong>Currency:</strong> @Model.Order.Currency</p>
+                            <p><strong>Subtotal:</strong> @FormatAmount(Model.Order.SubtotalAmount, Model.Order.Currency)</p>
+                            <p><strong>Total:</strong> @FormatAmount(Model.Order.TotalAmount, Model.Order.Currency)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h6>Order Items</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>SKU</th>
+                                    <th>Unit Price</th>
+                                    <th>Quantity</th>
+                                    <th>Line Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Order.Items)
+                                {
+                                    <tr>
+                                        <td>@item.TitleSnapshot</td>
+                                        <td>@item.SkuSnapshot</td>
+                                        <td>@FormatAmount(item.UnitPriceAmount, item.Currency)</td>
+                                        <td>@item.Quantity</td>
+                                        <td>@FormatAmount(item.LineTotalAmount, item.Currency)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h6>Timeline</h6>
+                </div>
+                <div class="card-body">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-primary"></div>
+                            <div class="timeline-content">
+                                <h6>Order Created</h6>
+                                <p>@Model.Order.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                            </div>
+                        </div>
+                        <!-- Add more timeline items based on status changes and audit logs -->
+                        @if (Model.Order.Status == "Paid")
+                        {
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-success"></div>
+                                <div class="timeline-content">
+                                    <h6>Payment Confirmed</h6>
+                                    <p>Status updated to Paid</p>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.Order.Status == "Refunded")
+                        {
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-warning"></div>
+                                <div class="timeline-content">
+                                    <h6>Order Refunded</h6>
+                                    <p>Status updated to Refunded</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                Order not found.
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #e9ecef;
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .timeline-marker {
+        position: absolute;
+        left: -22px;
+        top: 0;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+    }
+
+    .timeline-content {
+        background: #f8f9fa;
+        padding: 10px 15px;
+        border-radius: 4px;
+    }
+</style>
+
+@functions {
+    string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Paid" => "success",
+            "Pending" => "warning",
+            "Failed" => "danger",
+            "Refunded" => "secondary",
+            "Canceled" => "dark",
+            _ => "light"
+        };
+    }
+
+    string FormatAmount(long amount, string currency)
+    {
+        // Simple formatting - in real app, use proper currency formatting
+        return $"{currency} {(amount / 100.0):F2}";
+    }
+}

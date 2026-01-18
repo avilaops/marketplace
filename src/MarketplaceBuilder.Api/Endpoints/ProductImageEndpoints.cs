@@ -18,9 +18,36 @@ public static class ProductImageEndpoints
             .WithTags("Product Images")
             .DisableAntiforgery(); // Required for file uploads
 
+        group.MapGet("/", GetAll);
         group.MapPost("/", Upload);
         group.MapDelete("/{imageId:guid}", Delete);
         group.MapPut("/{imageId:guid}/sort-order", UpdateSortOrder);
+    }
+
+    private static async Task<IResult> GetAll(
+        Guid productId,
+        ApplicationDbContext context,
+        HttpContext httpContext)
+    {
+        var tenantId = (Guid?)httpContext.Items["TenantId"];
+        if (!tenantId.HasValue)
+            return Results.Problem("Tenant not resolved", statusCode: 401);
+
+        var images = await context.ProductImages
+            .Where(i => i.ProductId == productId && i.TenantId == tenantId.Value)
+            .OrderBy(i => i.SortOrder)
+            .Select(i => new ProductImageResponse(
+                i.Id,
+                i.ObjectKey,
+                i.PublicUrl,
+                i.ContentType,
+                i.SizeBytes,
+                i.SortOrder,
+                i.CreatedAt
+            ))
+            .ToListAsync();
+
+        return Results.Ok(images);
     }
 
     private static async Task<IResult> Upload(

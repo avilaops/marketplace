@@ -1,0 +1,255 @@
+@page "{productId}"
+@model MarketplaceBuilder.Admin.Pages.Catalog.Products.Images.IndexModel
+@{
+    ViewData["Title"] = $"Imagens - {Model.ProductTitle}";
+}
+
+<div class="row">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-page="/Catalog/Index">Catálogo</a></li>
+                <li class="breadcrumb-item"><a asp-page="/Catalog/Products/Index">Produtos</a></li>
+                <li class="breadcrumb-item active">@Model.ProductTitle</li>
+                <li class="breadcrumb-item active">Imagens</li>
+            </ol>
+        </nav>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Imagens do Produto: @Model.ProductTitle</h2>
+            <a asp-page="/Catalog/Products/Index" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Voltar aos Produtos
+            </a>
+        </div>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        <!-- Upload Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Enviar Novas Imagens</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data" id="uploadForm">
+                    <input type="hidden" name="productId" value="@Model.ProductId" />
+                    <div class="mb-3">
+                        <label for="files" class="form-label">Selecione imagens (JPEG, PNG, WebP, GIF - máx. 5MB cada)</label>
+                        <input type="file" class="form-control" id="files" name="files" multiple accept="image/*" required />
+                        <div class="form-text">
+                            Você pode selecionar múltiplas imagens de uma vez. Elas serão enviadas automaticamente.
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" asp-page-handler="Upload">
+                        <i class="bi bi-cloud-upload"></i> Enviar Imagens
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Images Grid -->
+        @if (Model.Images.Any())
+        {
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Imagens (@Model.Images.Count)</h5>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="saveOrder()">
+                        <i class="bi bi-check-lg"></i> Salvar Ordem
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row" id="imagesGrid">
+                        @foreach (var image in Model.Images)
+                        {
+                            <div class="col-md-3 col-sm-6 mb-3" data-image-id="@image.Id">
+                                <div class="card h-100 image-card">
+                                    <div class="position-relative">
+                                        <img src="@image.PublicUrl" class="card-img-top" alt="Product image"
+                                             style="height: 200px; object-fit: cover;" />
+                                        @if (image.SortOrder == 0)
+                                        {
+                                            <span class="badge bg-primary position-absolute top-0 start-0 m-2">
+                                                <i class="bi bi-star-fill"></i> Principal
+                                            </span>
+                                        }
+                                        <div class="image-actions position-absolute top-0 end-0 m-2">
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                                        onclick="deleteImage('@image.Id', '@image.PublicUrl')"
+                                                        title="Remover imagem">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                                @if (image.SortOrder != 0)
+                                                {
+                                                    <button type="button" class="btn btn-sm btn-outline-warning"
+                                                            onclick="setPrimary('@image.Id')"
+                                                            title="Definir como principal">
+                                                        <i class="bi bi-star"></i>
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body p-2">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">
+                                                @if (image.SizeBytes.HasValue)
+                                                {
+                                                    @($"{image.SizeBytes.Value / 1024} KB")
+                                                }
+                                            </small>
+                                            <small class="text-muted">
+                                                @image.CreatedAt.ToString("dd/MM/yyyy")
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <i class="bi bi-images display-1 text-muted mb-3"></i>
+                    <h5>Nenhuma imagem ainda</h5>
+                    <p class="text-muted">Envie as primeiras imagens do produto usando o formulário acima.</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar Remoção</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja remover esta imagem?</p>
+                <div class="text-center">
+                    <img id="deleteImagePreview" src="" alt="Preview" class="img-fluid" style="max-height: 200px;" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form method="post" id="deleteForm" style="display: inline;">
+                    <input type="hidden" name="productId" value="@Model.ProductId" />
+                    <input type="hidden" name="imageId" id="deleteImageId" />
+                    <button type="submit" class="btn btn-danger" asp-page-handler="Delete">Remover</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script>
+        // Initialize sortable
+        document.addEventListener('DOMContentLoaded', function() {
+            const grid = document.getElementById('imagesGrid');
+            if (grid) {
+                new Sortable(grid, {
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    handle: '.image-card'
+                });
+            }
+        });
+
+        function saveOrder() {
+            const imageElements = document.querySelectorAll('#imagesGrid [data-image-id]');
+            const imageIds = Array.from(imageElements).map(el => el.getAttribute('data-image-id'));
+
+            fetch('@Url.Page(null, null, new { productId = Model.ProductId, handler = "Reorder" })', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    productId: '@Model.ProductId',
+                    imageOrder: imageIds.join(',')
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Erro ao salvar ordem');
+                }
+            });
+        }
+
+        function deleteImage(imageId, imageUrl) {
+            document.getElementById('deleteImageId').value = imageId;
+            document.getElementById('deleteImagePreview').src = imageUrl;
+            new bootstrap.Modal(document.getElementById('deleteModal')).show();
+        }
+
+        function setPrimary(imageId) {
+            if (confirm('Definir esta imagem como principal?')) {
+                const form = document.createElement('form');
+                form.method = 'post';
+                form.action = '@Url.Page(null, null, new { productId = Model.ProductId, handler = "SetPrimary" })';
+
+                const productIdInput = document.createElement('input');
+                productIdInput.type = 'hidden';
+                productIdInput.name = 'productId';
+                productIdInput.value = '@Model.ProductId';
+                form.appendChild(productIdInput);
+
+                const imageIdInput = document.createElement('input');
+                imageIdInput.type = 'hidden';
+                imageIdInput.name = 'imageId';
+                imageIdInput.value = imageId;
+                form.appendChild(imageIdInput);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
+}
+
+<style>
+    .sortable-ghost {
+        opacity: 0.4;
+    }
+
+    .image-card {
+        cursor: move;
+    }
+
+    .image-card:hover {
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .image-actions {
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    .image-card:hover .image-actions {
+        opacity: 1;
+    }
+</style>

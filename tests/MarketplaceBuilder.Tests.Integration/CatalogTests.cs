@@ -135,6 +135,25 @@ public class CatalogTests : IClassFixture<WebApplicationFactory<Program>>
     }
 
     [Fact]
+    public async Task GetProductImages_ReturnsOkOrUnauthorized()
+    {
+        // Act - Try to get images for a non-existent product
+        var response = await _client.GetAsync("/api/admin/products/00000000-0000-0000-0000-000000000000/images");
+
+        // Assert - Endpoint should exist and return valid response
+        Assert.True(
+            response.StatusCode == HttpStatusCode.OK ||
+            response.StatusCode == HttpStatusCode.Unauthorized ||
+            response.StatusCode == HttpStatusCode.NotFound,
+            $"Endpoint returned unexpected status. Got: {response.StatusCode}. " +
+            $"If this is 500 InternalServerError, check database schema/migrations."
+        );
+        
+        // Ensure we're not getting server errors
+        Assert.NotEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+    }
+
+    [Fact]
     public async Task DatabaseOperations_WithLocalhostTenant_WorksCorrectly()
     {
         // This test validates that the database schema is properly set up

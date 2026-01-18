@@ -1,0 +1,99 @@
+@page
+@model MarketplaceBuilder.Admin.Pages.Catalog.Products.IndexModel
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+<div class="row">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-page="/Catalog/Index">Catálogo</a></li>
+                <li class="breadcrumb-item active">Produtos</li>
+            </ol>
+        </nav>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Produtos</h2>
+            <a asp-page="/Catalog/Products/Create" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Novo Produto
+            </a>
+        </div>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        @if (Model.Products.Any())
+        {
+            <div class="row">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100">
+                            @if (!string.IsNullOrEmpty(product.PrimaryImageUrl))
+                            {
+                                <img src="@product.PrimaryImageUrl" class="card-img-top" alt="@product.Title"
+                                     style="height: 200px; object-fit: cover;" />
+                            }
+                            else
+                            {
+                                <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                                     style="height: 200px;">
+                                    <i class="bi bi-image display-1 text-muted"></i>
+                                </div>
+                            }
+                            <div class="card-body">
+                                <h5 class="card-title">@product.Title</h5>
+                                <p class="card-text">
+                                    <strong>Slug:</strong> @product.Slug<br />
+                                    <strong>Categoria:</strong> @(product.CategoryName ?? "Nenhuma")<br />
+                                    <strong>Status:</strong>
+                                    <span class="badge @(product.Status == "Active" ? "bg-success" : product.Status == "Draft" ? "bg-warning" : "bg-secondary")">
+                                        @product.Status
+                                    </span>
+                                </p>
+                                <div class="d-flex gap-2">
+                                    <a asp-page="/Catalog/Products/Edit" asp-route-id="@product.Id" class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-pencil"></i> Editar
+                                    </a>
+                                    <a asp-page="/Catalog/Products/Images/Index" asp-route-productId="@product.Id" class="btn btn-outline-info btn-sm">
+                                        <i class="bi bi-images"></i> Imagens
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-footer text-muted">
+                                <small>Criado em @product.CreatedAt.ToString("dd/MM/yyyy")</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <i class="bi bi-box display-1 text-muted mb-3"></i>
+                    <h5>Nenhum produto ainda</h5>
+                    <p class="text-muted">Crie seu primeiro produto para começar a montar seu catálogo.</p>
+                    <a asp-page="/Catalog/Products/Create" class="btn btn-primary">
+                        <i class="bi bi-plus-lg"></i> Criar Primeiro Produto
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

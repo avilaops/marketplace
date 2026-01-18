@@ -1,0 +1,53 @@
+@page
+@model MarketplaceBuilder.Admin.Pages.Catalog.IndexModel
+@{
+    ViewData["Title"] = "Catálogo";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h2>Gerenciamento de Catálogo</h2>
+        <p class="lead">Gerencie produtos, categorias e imagens do seu marketplace.</p>
+
+        <div class="row mt-4">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-box display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">Produtos</h5>
+                        <p class="card-text">Gerencie produtos, preços, descrições e configurações.</p>
+                        <a asp-page="/Catalog/Products/Index" class="btn btn-primary">
+                            <i class="bi bi-arrow-right"></i> Ver Produtos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-tags display-4 text-success mb-3"></i>
+                        <h5 class="card-title">Categorias</h5>
+                        <p class="card-text">Organize seus produtos em categorias e subcategorias.</p>
+                        <a asp-page="/Catalog/Categories/Index" class="btn btn-success">
+                            <i class="bi bi-arrow-right"></i> Ver Categorias
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-images display-4 text-info mb-3"></i>
+                        <h5 class="card-title">Imagens</h5>
+                        <p class="card-text">Gerencie imagens de produtos e configurações de mídia.</p>
+                        <a asp-page="/Catalog/Images/Index" class="btn btn-info">
+                            <i class="bi bi-arrow-right"></i> Ver Imagens
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

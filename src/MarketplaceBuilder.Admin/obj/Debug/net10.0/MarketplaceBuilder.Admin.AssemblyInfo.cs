@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MarketplaceBuilder.Admin")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fec7aff8561d59ce042623677a8ddfee0dafa607")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+052fde58ef9bcc16327782dfc8b4df9d0b752e22")]
 [assembly: System.Reflection.AssemblyProductAttribute("MarketplaceBuilder.Admin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MarketplaceBuilder.Admin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
